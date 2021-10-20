@@ -20,5 +20,12 @@
   },
   "scripts": {
     "test": "jest"
+  },
+  "wallaby": {
+    "workers": {
+      "initial": 1,
+      "regular": 1,
+      "restart": true
+    }
   }
 }
