@@ -1,6 +1,6 @@
 import { connect, disconnect } from "mongoose";
-import { VersionedDocumentModel } from "./model/versionedDocument";
-import { MongoVersionedDocument, DocumentData } from "./types";
+import { VersionedDocumentModel } from "./../model/versionedDocument";
+import { MongoVersionedDocument, DocumentData } from "./../types";
 
 export class MongoDb {
   private mongoUri;
