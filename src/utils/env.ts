@@ -1,4 +1,6 @@
 import dotenv from 'dotenv';
+import fs from 'fs';
+
 dotenv.config();
 
 const getEnviromentVariable = (name: string) => {
@@ -10,5 +12,13 @@ const getEnviromentVariable = (name: string) => {
 }
 
 export const getMongoUri = () => {
-    return getEnviromentVariable('MONGO_TEST_URI');
+
+
+    return isTest() ?
+        // @ts-ignore
+        `${global.__MONGO_URI__}${global.__MONGO_DB_NAME__}` : getEnviromentVariable('MONGO_URI');
+}
+
+export const isTest = () => {
+    return getEnviromentVariable('NODE_ENV') === 'test';
 }

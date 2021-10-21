@@ -1,5 +1,6 @@
 import { MongoClient, Db, ObjectId } from 'mongodb';
 import faker from 'faker';
+import { getMongoUri } from './utils/env';
 
 describe('insert', () => {
     let connection: MongoClient;
@@ -8,7 +9,7 @@ describe('insert', () => {
     beforeAll(async () => {
         const { __MONGO_URI__ } = global as any;
 
-        connection = await MongoClient.connect(__MONGO_URI__, {
+        connection = await MongoClient.connect(getMongoUri(), {
             // useNewUrlParser: true,
             // useUnifiedTopology: true,
         });
