@@ -6,12 +6,12 @@ module.exports = async () => {
     if (global.__MONGOD__) {
         console.info('yes! MongoDB is running 🏃🏃🏃');
         try {
-            console.info('stopping mongo 🛑🛑🛑');
+            console.info('stopping mongo1 🛑🛑🛑');
             await global.__MONGOD__.stop();
         } catch (err) {
             console.info('ooooooooops error 😔😔', err);
         }
     }
 
-    return setup();
+    setup();
 };
