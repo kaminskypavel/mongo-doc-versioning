@@ -1,6 +1,10 @@
 import { connect, disconnect } from "mongoose";
 import { VersionedDocumentModel } from "./../model/versionedDocument";
-import { MongoVersionedDocument, DocumentData } from "./../types";
+import {
+  instanceOfVersionedDocument,
+  MongoVersionedDocument,
+  VersionedDocument,
+} from "./../types";
 
 export class MongoDb {
   private mongoUri;
@@ -14,6 +18,12 @@ export class MongoDb {
   }
 
   async insertDocument(data: any): Promise<MongoVersionedDocument> {
+    if (instanceOfVersionedDocument(data)) {
+      throw new Error(
+        "Cannot insert a VersionedDocument, please insert just the raw data"
+      );
+    }
+
     const newDocument = await VersionedDocumentModel.create({
       current: { data },
       revisions: [],
@@ -25,9 +35,9 @@ export class MongoDb {
 
   async findDocument(
     _id: string,
-    opts = { raw: false }
+    opts = { raw: false, versions: true }
   ): Promise<MongoVersionedDocument | object | null | undefined> {
-    const { raw } = opts;
+    const { raw = false } = opts;
     const projection = raw ? {} : { "current.data": 1 };
     const doc = await VersionedDocumentModel.findById(_id, projection);
 

@@ -15,5 +15,11 @@ export interface VersionedDocument {
   revisions?: DocumentData[];
 }
 
+export const instanceOfVersionedDocument = (
+  object: any
+): object is VersionedDocument => {
+  return "current" in object && "revisions" in object;
+};
+
 export type MongoVersionedDocument = VersionedDocument &
   mongoose.Document<any, any, VersionedDocument>;

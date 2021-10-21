@@ -3,7 +3,7 @@ import faker from "faker";
 import { getMongoUri } from "../utils/env";
 import { MongoDb } from ".";
 import { MongoVersionedDocument } from "../types";
-
+import { VersionedDocument } from "../types/index";
 
 describe("#MongoDb", () => {
   const mongoDb = new MongoDb(getMongoUri());
@@ -32,6 +32,17 @@ describe("#MongoDb", () => {
       const doc = await mongoDb.insertDocument(user);
       expect(doc.current.data).toBe(user);
       expect(doc.revisions).toEqual([]);
+    });
+
+    it("shouldn't add a document that has revisions", async () => {
+      const doc: Partial<VersionedDocument> = {
+        current: {
+          data: {},
+          metadata: { createdAt: new Date(), updatedAt: new Date() },
+        },
+        revisions: [],
+      };
+      expect(mongoDb.insertDocument(doc)).rejects.toThrow(Error);
     });
 
     //   it("should insert a doc into collection", async () => {
