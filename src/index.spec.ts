@@ -1,5 +1,5 @@
 import { MongoClient, Db, ObjectId } from 'mongodb';
-import * as env from "./env"
+import faker from 'faker';
 
 describe('insert', () => {
     let connection: MongoClient;
@@ -18,9 +18,10 @@ describe('insert', () => {
     it('should insert a doc into collection', async () => {
         const users = db.collection('users');
 
-        const mockUser = { _id: new ObjectId('some-user-id'), name: 'John' };
+        const mockUser = { _id: new ObjectId('some-user-id'), commit: faker.git.commitMessage() };
         await users.insertOne(mockUser);
-
+        console.log(mockUser);
+        
         const insertedUser = await users.findOne({ _id: new ObjectId('some-user-id') });
         expect(insertedUser).toEqual(mockUser);
     });
