@@ -7,8 +7,8 @@ const DocumentDataSchema = new Schema({
         required: true,
     },
     metadata: {
-        createdAt: { type: Schema.Types.Date, default: Date.now(), required: false },
-        updatedAt: { type: Schema.Types.Date, default: Date.now(), required: false },
+        createdAt: { type: Schema.Types.Date, default: Date.now() },
+        updatedAt: { type: Schema.Types.Date, default: Date.now() },
     }
 
 })
