@@ -28,10 +28,10 @@ export class MongoDb {
     opts = { raw: false }
   ): Promise<MongoVersionedDocument | object | null | undefined> {
     const { raw } = opts;
-    const doc = await VersionedDocumentModel.findById(_id);
-    const res = raw ? doc : doc?.current?.data;
+    const projection = raw ? {} : { "current.data": 1 };
+    const doc = await VersionedDocumentModel.findById(_id, projection);
 
-    return res;
+    return raw ? doc : doc?.current?.data;
   }
 
   async close() {
